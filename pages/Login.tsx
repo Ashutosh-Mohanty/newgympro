@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { UserRole } from '../types.ts';
-import { Input, Button, Card } from '../components/UI.tsx';
-import { getMembers, getGyms } from '../services/storage.ts';
+import { UserRole } from '../types';
+import { Input, Button, Card } from '../components/UI';
+import { getMembers, getGyms } from '../services/storage';
 
 interface LoginProps {
   onLogin: (role: UserRole, data: any) => void;
@@ -64,48 +64,49 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[90vh] py-12 px-4">
-      {/* Static Header */}
+    <div className="flex flex-col items-center justify-center min-h-[85vh] py-10 px-4">
+      {/* Brand Section - No Animations */}
       <div className="mb-10 text-center">
-        <div className="w-16 h-16 bg-gym-accent rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-gym-accent/10">
-            <i className="fas fa-dumbbell text-3xl text-white"></i>
+        <div className="w-20 h-20 bg-gym-accent rounded-3xl flex items-center justify-center mx-auto mb-5 shadow-2xl shadow-gym-accent/20">
+            <i className="fas fa-dumbbell text-4xl text-white"></i>
         </div>
-        <h1 className="text-3xl font-black text-white tracking-tight">GymPro <span className="text-gym-accent">Central</span></h1>
-        <p className="text-slate-500 mt-1.5 text-sm font-medium">Professional Management Portal</p>
+        <h1 className="text-4xl font-black text-white tracking-tighter leading-none">GymPro <span className="text-gym-accent">Central</span></h1>
+        <p className="text-slate-400 mt-3 text-sm font-semibold uppercase tracking-widest">Master Portal Access</p>
       </div>
 
-      <Card className="w-full max-w-md bg-gym-card/80 backdrop-blur-xl border-slate-700/50 shadow-2xl">
+      {/* Login Card */}
+      <Card className="w-full max-w-md bg-slate-900 border border-slate-700/60 shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden">
         <form onSubmit={handleLogin} className="space-y-6">
           
           {/* Main Toggle: Highlighted Manager & Member */}
-          <div className="bg-slate-900/60 p-1.5 rounded-xl flex border border-slate-800">
+          <div className="bg-slate-950 p-1.5 rounded-xl flex border border-slate-800 shadow-inner">
             <button
               type="button"
               onClick={() => { setRole(UserRole.MANAGER); setError(''); }}
-              className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-lg font-bold text-xs uppercase tracking-wider transition-all ${role === UserRole.MANAGER ? 'bg-gym-accent text-white shadow-lg shadow-gym-accent/10' : 'text-slate-500 hover:text-slate-300'}`}
+              className={`flex-1 flex items-center justify-center gap-2 py-3.5 rounded-lg font-black text-xs uppercase tracking-widest transition-all ${role === UserRole.MANAGER ? 'bg-gym-accent text-white shadow-lg' : 'text-slate-500 hover:text-slate-400'}`}
             >
               <i className="fas fa-user-tie"></i> Manager
             </button>
             <button
               type="button"
               onClick={() => { setRole(UserRole.MEMBER); setError(''); }}
-              className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-lg font-bold text-xs uppercase tracking-wider transition-all ${role === UserRole.MEMBER ? 'bg-gym-accent text-white shadow-lg shadow-gym-accent/10' : 'text-slate-500 hover:text-slate-300'}`}
+              className={`flex-1 flex items-center justify-center gap-2 py-3.5 rounded-lg font-black text-xs uppercase tracking-widest transition-all ${role === UserRole.MEMBER ? 'bg-gym-accent text-white shadow-lg' : 'text-slate-500 hover:text-slate-400'}`}
             >
               <i className="fas fa-user"></i> Member
             </button>
           </div>
 
-          <div className="space-y-4">
-            {/* Conditional Labeling */}
+          <div className="space-y-5">
+            {/* Context Header for Admin Mode */}
             {role === UserRole.SUPER_ADMIN && (
-               <div className="bg-blue-500/10 border border-blue-500/20 py-2 rounded-lg text-center mb-4">
-                  <span className="text-[10px] text-blue-400 font-black uppercase tracking-widest">Platform Administration Mode</span>
+               <div className="bg-blue-600/20 border border-blue-500/30 py-2.5 rounded-xl text-center">
+                  <span className="text-[10px] text-blue-400 font-black uppercase tracking-[0.3em]">System Admin Restricted Portal</span>
                </div>
             )}
 
             {role !== UserRole.SUPER_ADMIN && (
               <Input 
-                label="Gym ID" 
+                label="Gym Identifier" 
                 placeholder="e.g. GYM001" 
                 value={gymId} 
                 required
@@ -116,8 +117,8 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
             {(role === UserRole.MEMBER || role === UserRole.SUPER_ADMIN) && (
               <Input 
-                label={role === UserRole.MEMBER ? "Mobile or Member ID" : "Admin Username"} 
-                placeholder={role === UserRole.MEMBER ? "Enter your mobile" : "super"}
+                label={role === UserRole.MEMBER ? "Registered Mobile Number" : "System Username"} 
+                placeholder={role === UserRole.MEMBER ? "9876543210" : "super"}
                 value={username} 
                 required
                 onChange={e => setUsername(e.target.value)}
@@ -125,7 +126,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
             )}
 
             <Input 
-              label="Password" 
+              label="Access Password" 
               type="password" 
               placeholder="••••••••"
               value={password} 
@@ -135,42 +136,46 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
           </div>
 
           {error && (
-            <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-xs flex items-center gap-2 animate-fade-in">
-              <i className="fas fa-circle-info"></i>
-              <span className="font-semibold">{error}</span>
+            <div className="p-4 bg-red-600/10 border border-red-500/30 rounded-xl text-red-400 text-xs flex items-center gap-3 animate-fade-in font-bold">
+              <i className="fas fa-circle-exclamation text-base"></i>
+              <span>{error}</span>
             </div>
           )}
 
-          <Button type="submit" className="w-full py-3.5 text-sm font-bold uppercase tracking-widest" size="lg">
-            Login Securely
+          <Button type="submit" className="w-full py-4 text-sm font-black uppercase tracking-[0.2em]" size="lg">
+            Authorize & Sign In
           </Button>
           
-          {/* Subtle Super Admin Entry */}
-          <div className="text-center pt-4 border-t border-slate-800/50 mt-4">
+          {/* Subtle Super Admin Entry at bottom of Card */}
+          <div className="text-center pt-5 border-t border-slate-800/80">
             {role !== UserRole.SUPER_ADMIN ? (
               <button 
                 type="button"
                 onClick={() => { setRole(UserRole.SUPER_ADMIN); setError(''); }}
-                className="text-[10px] text-slate-600 hover:text-slate-400 font-bold uppercase tracking-widest transition-colors"
+                className="text-[9px] text-slate-600 hover:text-slate-400 font-bold uppercase tracking-[0.2em] transition-colors"
               >
-                System Administrator? Login Here
+                System Administrator? Click Here
               </button>
             ) : (
               <button 
                 type="button"
                 onClick={() => { setRole(UserRole.MANAGER); setError(''); }}
-                className="text-[10px] text-slate-600 hover:text-slate-400 font-bold uppercase tracking-widest transition-colors"
+                className="text-[9px] text-slate-600 hover:text-slate-400 font-bold uppercase tracking-[0.2em] transition-colors"
               >
-                Back to Gym Portal
+                Return to Public Portal
               </button>
             )}
           </div>
         </form>
       </Card>
       
-      <div className="mt-8 flex gap-6 text-[10px] text-slate-600 font-bold uppercase tracking-widest">
-        <span>Manager: GYM001 / admin</span>
-        <span>Admin: super / admin</span>
+      {/* Help Footer */}
+      <div className="mt-10 flex flex-col items-center gap-4 text-[9px] text-slate-600 font-black uppercase tracking-widest text-center">
+        <div className="flex gap-8">
+            <span>MANAGER: GYM001 / ADMIN</span>
+            <span>SYSTEM: SUPER / ADMIN</span>
+        </div>
+        <p className="text-slate-700">&copy; 2024 GYMPRO CENTRAL MANAGEMENT</p>
       </div>
     </div>
   );

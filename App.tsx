@@ -1,9 +1,9 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
-import { AuthState, UserRole } from './types.ts';
-import Login from './pages/Login.tsx';
-import ManagerDashboard from './pages/ManagerDashboard.tsx';
-import MemberDashboard from './pages/MemberDashboard.tsx';
-import SuperAdminDashboard from './pages/SuperAdminDashboard.tsx';
+import { AuthState, UserRole } from './types';
+import Login from './pages/Login';
+import ManagerDashboard from './pages/ManagerDashboard';
+import MemberDashboard from './pages/MemberDashboard';
+import SuperAdminDashboard from './pages/SuperAdminDashboard';
 
 // --- Auth Context ---
 interface AuthContextType {
@@ -31,7 +31,11 @@ export default function App() {
   useEffect(() => {
     const savedAuth = localStorage.getItem('gym_auth');
     if (savedAuth) {
-      setAuthState(JSON.parse(savedAuth));
+      try {
+        setAuthState(JSON.parse(savedAuth));
+      } catch (e) {
+        localStorage.removeItem('gym_auth');
+      }
     }
   }, []);
 

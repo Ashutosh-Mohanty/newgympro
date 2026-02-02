@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Member, Gym, TransactionCategory, PaymentRecord, SupplementBill } from '../types.ts';
-import { getMembers, saveMembers, addMember, getMemberStatus, updateMember, getTransactions, recordTransaction, updateGym } from '../services/storage.ts';
-import { Button, Input, Card, Modal, Select, Badge } from '../components/UI.tsx';
-import { useAuth } from '../App.tsx';
+import { Member, Gym, TransactionCategory, PaymentRecord, SupplementBill } from '../types';
+import { getMembers, saveMembers, addMember, getMemberStatus, updateMember, getTransactions, recordTransaction, updateGym } from '../services/storage';
+import { Button, Input, Card, Modal, Select, Badge } from '../components/UI';
+import { useAuth } from '../App';
 
 const ManagerDashboard: React.FC = () => {
   const { authState } = useAuth();
