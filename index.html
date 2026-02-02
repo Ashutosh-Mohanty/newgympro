@@ -21,9 +21,6 @@
                 danger: '#ef4444',
                 warning: '#f59e0b',
               }
-            },
-            animation: {
-              'bounce-slow': 'bounce 3s infinite',
             }
           }
         }
@@ -57,27 +54,18 @@
 </head>
   <body>
     <div id="root"></div>
-    <!-- Application Entry Point -->
     <script type="module" src="index.tsx"></script>
-    
-    <!-- Firebase SDK & Analytics -->
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
-      import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-analytics.js";
-
       const firebaseConfig = {
         apiKey: "AIzaSyCRBp1Yz5HrqoxZEQa6q1nw-jXPnzxpCqg",
         authDomain: "gym-pro-2da3f.firebaseapp.com",
         projectId: "gym-pro-2da3f",
         storageBucket: "gym-pro-2da3f.firebasestorage.app",
         messagingSenderId: "358100748576",
-        appId: "1:358100748576:web:e99fc6bf38f0b81bf96f45",
-        measurementId: "G-2RSKXYZJL1"
+        appId: "1:358100748576:web:e99fc6bf38f0b81bf96f45"
       };
-
-      const app = initializeApp(firebaseConfig);
-      const analytics = getAnalytics(app);
-      console.log("Firebase initialized successfully for GymPro.");
+      initializeApp(firebaseConfig);
     </script>
   </body>
 </html>
