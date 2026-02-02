@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { UserRole } from '../types';
-import { Input, Button, Card } from '../components/UI';
-import { getMembers, getGyms } from '../services/storage';
+import { UserRole } from '../types.ts';
+import { Input, Button, Card } from '../components/UI.tsx';
+import { getMembers, getGyms } from '../services/storage.ts';
 
 interface LoginProps {
   onLogin: (role: UserRole, data: any) => void;

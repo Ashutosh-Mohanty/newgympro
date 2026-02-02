@@ -1,9 +1,8 @@
-
 import React, { useState, useEffect, useMemo } from 'react';
-import { Member, Gym, TransactionCategory, PaymentRecord, SupplementBill } from '../types';
-import { getMembers, saveMembers, addMember, getMemberStatus, updateMember, getTransactions, recordTransaction, updateGym } from '../services/storage';
-import { Button, Input, Card, Modal, Select, Badge } from '../components/UI';
-import { useAuth } from '../App';
+import { Member, Gym, TransactionCategory, PaymentRecord, SupplementBill } from '../types.ts';
+import { getMembers, saveMembers, addMember, getMemberStatus, updateMember, getTransactions, recordTransaction, updateGym } from '../services/storage.ts';
+import { Button, Input, Card, Modal, Select, Badge } from '../components/UI.tsx';
+import { useAuth } from '../App.tsx';
 
 const ManagerDashboard: React.FC = () => {
   const { authState } = useAuth();
@@ -566,7 +565,7 @@ const ManagerDashboard: React.FC = () => {
                <h3 className="text-lg font-bold text-white border-b border-slate-700 pb-2">2. Transformation Journey</h3>
                <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                     <p className="text-xs text-slate-500 uppercase font-bold">Before Photo</p>
+                     <p className="text-xs text-slate-500 uppercase font-bold text-center">Before Photo</p>
                      <label className="block w-full h-48 bg-slate-900 border-2 border-dashed border-slate-700 rounded-lg overflow-hidden cursor-pointer relative hover:border-gym-accent transition-all">
                         {selectedMember.transformationPhotos.before ? (
                             <img src={selectedMember.transformationPhotos.before} className="w-full h-full object-cover" />
@@ -580,7 +579,7 @@ const ManagerDashboard: React.FC = () => {
                      </label>
                   </div>
                   <div className="space-y-2">
-                     <p className="text-xs text-slate-500 uppercase font-bold">After Photo</p>
+                     <p className="text-xs text-slate-500 uppercase font-bold text-center">After Photo</p>
                      <label className="block w-full h-48 bg-slate-900 border-2 border-dashed border-slate-700 rounded-lg overflow-hidden cursor-pointer relative hover:border-gym-accent transition-all">
                         {selectedMember.transformationPhotos.after ? (
                             <img src={selectedMember.transformationPhotos.after} className="w-full h-full object-cover" />

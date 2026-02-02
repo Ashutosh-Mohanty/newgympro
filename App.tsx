@@ -1,9 +1,9 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
-import { AuthState, UserRole } from './types';
-import Login from './pages/Login';
-import ManagerDashboard from './pages/ManagerDashboard';
-import MemberDashboard from './pages/MemberDashboard';
-import SuperAdminDashboard from './pages/SuperAdminDashboard';
+import { AuthState, UserRole } from './types.ts';
+import Login from './pages/Login.tsx';
+import ManagerDashboard from './pages/ManagerDashboard.tsx';
+import MemberDashboard from './pages/MemberDashboard.tsx';
+import SuperAdminDashboard from './pages/SuperAdminDashboard.tsx';
 
 // --- Auth Context ---
 interface AuthContextType {

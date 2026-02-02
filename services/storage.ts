@@ -1,4 +1,4 @@
-import { Member, Trainer, PaymentRecord, GymSettings, Gym, UserRole, TransactionCategory } from '../types';
+import { Member, Trainer, PaymentRecord, GymSettings, Gym, UserRole, TransactionCategory } from '../types.ts';
 
 const MEMBERS_KEY = 'gym_members';
 const SETTINGS_KEY = 'gym_settings';

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Gym } from '../types';
-import { getGyms, saveGyms, addGym, updateGym, calculateExpiry } from '../services/storage';
-import { Card, Button, Input, Modal } from '../components/UI';
+import { Gym } from '../types.ts';
+import { getGyms, saveGyms, addGym, updateGym, calculateExpiry } from '../services/storage.ts';
+import { Card, Button, Input, Modal } from '../components/UI.tsx';
 
 const SuperAdminDashboard: React.FC = () => {
   const [gyms, setGyms] = useState<Gym[]>([]);

@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { useAuth } from '../App';
-import { Member, Gym, TransactionCategory } from '../types';
-import { Card, Badge, Button } from '../components/UI';
-import { getMemberStatus, getTransactions, getGyms } from '../services/storage';
-import { getAIWorkoutTip } from '../services/geminiService';
+import { useAuth } from '../App.tsx';
+import { Member, Gym, TransactionCategory } from '../types.ts';
+import { Card, Badge, Button } from '../components/UI.tsx';
+import { getMemberStatus, getTransactions, getGyms } from '../services/storage.ts';
+import { getAIWorkoutTip } from '../services/geminiService.ts';
 
 const MemberDashboard: React.FC = () => {
   const { authState } = useAuth();
