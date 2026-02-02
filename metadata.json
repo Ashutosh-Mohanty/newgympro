@@ -1,0 +1,7 @@
+{
+  "name": "GymPro Manager",
+  "description": "Professional Gym Management Platform with Multi-role Access and AI Insights",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
