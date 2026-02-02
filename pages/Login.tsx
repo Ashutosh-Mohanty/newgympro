@@ -65,102 +65,114 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
     }
   };
 
+  const roleOptions = [
+    { label: 'Platform Admin', value: UserRole.SUPER_ADMIN, icon: 'fa-shield-halved' },
+    { label: 'Gym Manager', value: UserRole.MANAGER, icon: 'fa-user-tie' },
+    { label: 'Gym Member', value: UserRole.MEMBER, icon: 'fa-user' }
+  ];
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-[80vh]">
-      <div className="mb-8 text-center animate-bounce-slow">
-        <div className="w-16 h-16 bg-gym-accent rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-gym-accent/20">
-            <i className="fas fa-dumbbell text-3xl text-white"></i>
+    <div className="flex flex-col items-center justify-center min-h-[90vh] py-8">
+      <div className="mb-10 text-center">
+        <div className="w-20 h-20 bg-gym-accent rounded-3xl flex items-center justify-center mx-auto mb-5 shadow-xl shadow-gym-accent/20">
+            <i className="fas fa-dumbbell text-4xl text-white"></i>
         </div>
-        <h1 className="text-3xl font-bold text-white">GymPro Central</h1>
-        <p className="text-slate-400 mt-2">The Ultimate Management Platform</p>
+        <h1 className="text-4xl font-black text-white tracking-tighter">GymPro <span className="text-gym-accent">Central</span></h1>
+        <p className="text-slate-400 mt-2 font-medium">Enterprise Management Solution</p>
       </div>
 
-      <Card className="w-full max-w-md backdrop-blur-sm bg-gym-card/90">
-        <form onSubmit={handleLogin} className="space-y-4">
+      <Card className="w-full max-w-md backdrop-blur-md bg-gym-card/95 border-slate-700/80 shadow-2xl">
+        <form onSubmit={handleLogin} className="space-y-6">
           
-          <div className="bg-slate-800/50 p-1 rounded-lg flex text-xs mb-4">
-            {[UserRole.MANAGER, UserRole.MEMBER].map((r) => (
+          <div className="bg-slate-900/50 p-1.5 rounded-xl flex gap-1 border border-slate-800">
+            {roleOptions.map((opt) => (
                <button
-                 key={r}
+                 key={opt.value}
                  type="button"
                  onClick={() => {
-                   setRole(r);
+                   setRole(opt.value);
                    setError('');
                  }}
-                 className={`flex-1 py-2 rounded-md transition-all ${role === r ? 'bg-gym-accent text-white shadow' : 'text-slate-400 hover:text-white'}`}
+                 className={`flex-1 flex flex-col items-center gap-1.5 py-3 px-1 rounded-lg transition-all ${role === opt.value ? 'bg-gym-accent text-white shadow-lg' : 'text-slate-500 hover:text-slate-300'}`}
                >
-                 {r.replace('_', ' ')}
+                 <i className={`fas ${opt.icon} text-sm`}></i>
+                 <span className="text-[10px] font-bold uppercase tracking-tight leading-none">{opt.label.split(' ')[1]}</span>
                </button>
             ))}
           </div>
 
-          {role === UserRole.SUPER_ADMIN && (
-             <div className="text-center py-2 mb-2 bg-blue-500/10 rounded border border-blue-500/20">
-                <p className="text-[10px] text-blue-400 font-bold uppercase tracking-widest">Platform Administration Mode</p>
-             </div>
-          )}
+          <div className="space-y-4 pt-2">
+            {role === UserRole.SUPER_ADMIN && (
+               <div className="text-center py-2.5 mb-2 bg-blue-500/10 rounded-lg border border-blue-500/20">
+                  <p className="text-[10px] text-blue-400 font-black uppercase tracking-[0.2em]">Master Portal Login</p>
+               </div>
+            )}
 
-          {role !== UserRole.SUPER_ADMIN && (
+            {role !== UserRole.SUPER_ADMIN && (
+              <Input 
+                label="Gym Identifier (ID)" 
+                placeholder="e.g. GYM001" 
+                value={gymId} 
+                required
+                onChange={e => setGymId(e.target.value)}
+              />
+            )}
+
+            {(role === UserRole.MEMBER || role === UserRole.SUPER_ADMIN) && (
+              <Input 
+                label={role === UserRole.MEMBER ? "Mobile Number or Member ID" : "Administrator Username"} 
+                placeholder={role === UserRole.MEMBER ? "9876543210" : "super"}
+                value={username} 
+                required
+                onChange={e => setUsername(e.target.value)}
+              />
+            )}
+
             <Input 
-              label="Gym ID" 
-              placeholder="e.g. GYM001" 
-              value={gymId} 
-              onChange={e => setGymId(e.target.value)}
+              label="Secure Password" 
+              type="password" 
+              placeholder="••••••••"
+              value={password} 
+              required
+              onChange={e => setPassword(e.target.value)}
             />
-          )}
-
-          {(role === UserRole.MEMBER || role === UserRole.SUPER_ADMIN) && (
-            <Input 
-              label={role === UserRole.MEMBER ? "Mobile Number / ID" : "Admin Username"} 
-              placeholder={role === UserRole.MEMBER ? "Enter mobile" : "Enter super admin username"}
-              value={username} 
-              onChange={e => setUsername(e.target.value)}
-            />
-          )}
-
-          <Input 
-            label="Password" 
-            type="password" 
-            placeholder="Enter password"
-            value={password} 
-            onChange={e => setPassword(e.target.value)}
-          />
+          </div>
 
           {error && (
-            <div className="p-3 bg-red-500/10 border border-red-500/20 rounded text-red-400 text-sm flex items-center gap-2">
-              <i className="fas fa-exclamation-circle"></i> {error}
+            <div className="p-3.5 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400 text-sm flex items-start gap-3 animate-fade-in">
+              <i className="fas fa-circle-exclamation mt-0.5"></i>
+              <span className="font-medium leading-tight">{error}</span>
             </div>
           )}
 
-          <Button type="submit" className="w-full" size="lg">
-            Login as {role.replace('_', ' ').toLowerCase()}
+          <Button type="submit" className="w-full py-4 text-base font-bold shadow-lg shadow-gym-accent/10" size="lg">
+            Login as {roleOptions.find(o => o.value === role)?.label.split(' ')[1]}
           </Button>
           
-          <div className="flex flex-col gap-2 mt-4">
-            <div className="text-center text-[10px] text-slate-500">
-               Demo: Manager (GYM001 / admin) | Member (Check manager dashboard)
+          <div className="mt-6 pt-6 border-t border-slate-800/50">
+            <div className="flex flex-col gap-3">
+              <div className="flex items-center justify-between px-2">
+                <span className="text-[10px] text-slate-600 font-bold uppercase tracking-wider">Access Help</span>
+                <span className="text-[10px] text-slate-400 font-medium">Demo Credentials Provided</span>
+              </div>
+              <div className="grid grid-cols-1 gap-2">
+                <div className="bg-slate-900/30 p-2.5 rounded-lg border border-slate-800/50 text-[10px] text-slate-500">
+                  <span className="text-slate-400 font-bold block mb-0.5">Gym Manager:</span>
+                  ID: <span className="text-slate-300">GYM001</span> | Pass: <span className="text-slate-300">admin</span>
+                </div>
+                <div className="bg-slate-900/30 p-2.5 rounded-lg border border-slate-800/50 text-[10px] text-slate-500">
+                  <span className="text-slate-400 font-bold block mb-0.5">Platform Admin:</span>
+                  User: <span className="text-slate-300">super</span> | Pass: <span className="text-slate-300">admin</span>
+                </div>
+              </div>
             </div>
-            
-            {role !== UserRole.SUPER_ADMIN ? (
-              <button 
-                type="button"
-                onClick={() => setRole(UserRole.SUPER_ADMIN)}
-                className="text-[10px] text-slate-600 hover:text-slate-400 transition-colors uppercase tracking-widest font-bold mt-2"
-              >
-                Platform Admin Access
-              </button>
-            ) : (
-              <button 
-                type="button"
-                onClick={() => setRole(UserRole.MANAGER)}
-                className="text-[10px] text-slate-600 hover:text-slate-400 transition-colors uppercase tracking-widest font-bold mt-2"
-              >
-                Back to Gym Login
-              </button>
-            )}
           </div>
         </form>
       </Card>
+      
+      <p className="mt-8 text-slate-600 text-xs font-medium">
+        &copy; {new Date().getFullYear()} GymPro Management Solutions. All rights reserved.
+      </p>
     </div>
   );
 };
